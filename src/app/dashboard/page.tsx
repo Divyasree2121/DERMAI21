@@ -76,9 +76,6 @@ export default function DashboardPage() {
                 My Vault 🛡️
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <a href="/">Logout</a>
-            </Button>
           </div>
         </header>
 
