@@ -10,8 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { AlertCircle, ChevronLeft, Lightbulb, Microscope, ShieldAlert, TrendingUp, FileDown, Loader2 } from "lucide-react"
 import type { PreprocessAnalyzeImageOutput } from "@/ai/flows/preprocess-analyze-image-flow"
-import html2canvas from "html2canvas"
-import jsPDF from "jspdf"
 
 export default function ResultPage() {
   const router = useRouter()
@@ -45,8 +43,18 @@ export default function ResultPage() {
     setIsDownloading(true)
     
     try {
-      // Temporarily remove hidden class to capture
-      reportRef.current.classList.remove("hidden")
+      // Dynamic imports to prevent SSR issues and module resolution errors
+      const html2canvas = (await import("html2canvas")).default
+      const { jsPDF } = await import("jspdf")
+      
+      // Temporarily show the report off-screen for capture
+      // html2canvas cannot capture elements with display: none
+      const originalStyle = reportRef.current.style.cssText;
+      reportRef.current.style.display = 'block';
+      reportRef.current.style.position = 'fixed';
+      reportRef.current.style.top = '0';
+      reportRef.current.style.left = '-9999px';
+      reportRef.current.style.backgroundColor = '#ffffff';
       
       const canvas = await html2canvas(reportRef.current, {
         scale: 2,
@@ -54,6 +62,9 @@ export default function ResultPage() {
         logging: false,
         backgroundColor: "#ffffff"
       })
+      
+      // Restore original style
+      reportRef.current.style.cssText = originalStyle;
       
       const imgData = canvas.toDataURL("image/png")
       const pdf = new jsPDF({
@@ -69,7 +80,6 @@ export default function ResultPage() {
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight)
       pdf.save(`Derm-AI-Report-${sessionId}.pdf`)
       
-      reportRef.current.classList.add("hidden")
     } catch (error) {
       console.error("PDF Generation failed:", error)
       alert("Failed to generate PDF. Please try again.")
@@ -238,8 +248,8 @@ export default function ResultPage() {
         </div>
 
         {/* Hidden Report Template for PDF Generation */}
-        <div className="hidden">
-          <div ref={reportRef} className="p-12 bg-white text-black w-[210mm] font-body" style={{ minHeight: "297mm" }}>
+        <div style={{ display: 'none' }}>
+          <div ref={reportRef} className="p-12 bg-white text-black w-[210mm]" style={{ minHeight: "297mm", color: 'black' }}>
             <div className="border-b-4 border-primary pb-8 mb-8 flex justify-between items-end">
               <div>
                 <h1 className="text-4xl font-bold text-primary mb-2">Derm-AI Report</h1>
