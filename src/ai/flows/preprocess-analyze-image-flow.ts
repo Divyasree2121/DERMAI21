@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow for preprocessing and analyzing a dermatoscopic skin image.
@@ -27,6 +28,7 @@ const SkinConditionPredictionSchema = z.object({
 const PreprocessAnalyzeImageOutputSchema = z.object({
   predictedCondition: z.string().describe('The AI-predicted primary skin condition.'),
   confidenceScore: z.number().min(0).max(100).describe('The confidence score for the primary predicted condition, as a percentage (0-100).'),
+  explanation: z.string().describe('A brief clinical explanation (2-3 sentences) for the prediction based on observed visual features.'),
   allPredictions: z.array(SkinConditionPredictionSchema).describe('A list of all 10 skin conditions with their respective confidence scores.'),
   disclaimer: z.string().describe('A mandatory medical disclaimer.'),
 });
@@ -44,7 +46,11 @@ const classifyImagePrompt = ai.definePrompt({
   
   Based on the provided image, analyze visual features such as color variation, texture patterns, lesion shape, and border irregularities to provide a classification.
   
-  You must output a primary predicted skin condition, its confidence score (as a percentage), and also provide confidence scores for all the following 10 conditions. Ensure the sum of all scores for a given image equals 100%.
+  You must output:
+  1. A primary predicted skin condition.
+  2. Its confidence score (as a percentage).
+  3. A brief clinical explanation (2-3 sentences) for why this condition was predicted based on the visual features observed (e.g., mention specific patterns like pigment networks, globules, or vascular structures if applicable).
+  4. Confidence scores for all 10 listed conditions. Ensure the sum of all scores for a given image equals 100%.
 
   The 10 skin conditions are:
   - Eczema
@@ -72,10 +78,6 @@ const preprocessAnalyzeImageFlow = ai.defineFlow(
     outputSchema: PreprocessAnalyzeImageOutputSchema,
   },
   async (input) => {
-    // The AI model will handle the 'analysis' and 'classification' based on the image.
-    // The UI is expected to display 'Preprocessing and normalizing image...' and
-    // 'Analyzing image using EfficientNetB0-based deep learning model...' messages
-    // while waiting for this single AI call to complete.
     const { output } = await classifyImagePrompt(input);
     return output!;
   }

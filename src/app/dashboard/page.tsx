@@ -51,8 +51,9 @@ export default function DashboardPage() {
   }
 
   const viewResult = () => {
-    if (result) {
+    if (result && image) {
       localStorage.setItem("derm_ai_result", JSON.stringify(result))
+      localStorage.setItem("derm_ai_image", image)
       router.push("/dashboard/result")
     }
   }
