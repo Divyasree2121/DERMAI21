@@ -1,0 +1,23 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Medical AI concept background with subtle blue hues",
+      "imageUrl": "https://picsum.photos/seed/derm1/1200/800",
+      "imageHint": "medical technology"
+    },
+    {
+      "id": "skin-scan-sample",
+      "description": "A close up dermatoscopic skin scan example",
+      "imageUrl": "https://picsum.photos/seed/skin1/600/600",
+      "imageHint": "dermatology microscope"
+    },
+    {
+      "id": "ai-model-viz",
+      "description": "Abstract visualization of a neural network architecture",
+      "imageUrl": "https://picsum.photos/seed/ai1/800/600",
+      "imageHint": "neural network"
+    }
+  ]
+}
