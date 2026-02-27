@@ -81,7 +81,7 @@ export default function Home() {
         </div>
 
         <footer className="pt-12 text-muted-foreground text-xs uppercase tracking-widest border-t">
-          Final Year Academic Project • AI in Healthcare • © 2026
+          Derm-AI • © 2026
         </footer>
       </div>
     </div>

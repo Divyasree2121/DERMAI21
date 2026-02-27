@@ -423,7 +423,7 @@ export default function ResultPage() {
         </div>
 
         <footer className="text-center pt-12 pb-6 border-t">
-          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em]">Academic Project Demonstration • © 2026 Derm-AI 🏥 Navigator</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em]">Derm-AI • © 2026</p>
         </footer>
       </div>
     </div>
