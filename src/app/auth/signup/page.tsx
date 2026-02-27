@@ -39,7 +39,7 @@ export default function SignupPage() {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Create Academic Account</CardTitle>
           <CardDescription className="text-center">
-            Register to join the research project access list
+            Register
           </CardDescription>
         </CardHeader>
         <CardContent>
