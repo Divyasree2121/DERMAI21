@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -73,9 +72,9 @@ export default function ResultPage() {
         format: "a4"
       })
       
-      const imgProps = pdf.getImageProperties(imgData)
+      // Use canvas dimensions directly to calculate aspect ratio and avoid getImageProperties UNKNOWN error
       const pdfWidth = pdf.internal.pageSize.getWidth()
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width
       
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight)
       pdf.save(`Derm-AI-Report-${sessionId}.pdf`)
