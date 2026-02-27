@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -53,17 +52,12 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button asChild size="lg" className="px-8 py-6 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all">
-            <Link href="/dashboard">Enter Project</Link>
+          <Button asChild size="lg" className="rounded-full px-12 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all">
+            <Link href="/auth/login">Login</Link>
           </Button>
-          <div className="flex gap-4">
-            <Button variant="outline" asChild size="lg" className="rounded-full px-8">
-              <Link href="/auth/login">Login</Link>
-            </Button>
-            <Button variant="outline" asChild size="lg" className="rounded-full px-8">
-              <Link href="/auth/signup">Sign Up</Link>
-            </Button>
-          </div>
+          <Button variant="outline" asChild size="lg" className="rounded-full px-12 py-6 text-lg font-semibold">
+            <Link href="/auth/signup">Sign Up</Link>
+          </Button>
         </div>
 
         <footer className="pt-12 text-muted-foreground text-xs uppercase tracking-widest">
