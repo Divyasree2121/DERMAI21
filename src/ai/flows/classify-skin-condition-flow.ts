@@ -1,4 +1,3 @@
-'use server';
 /**
  * @fileOverview This file implements a Genkit flow for classifying dermatoscopic skin images.
  * It takes an image as input and returns a predicted skin condition along with a confidence score.
@@ -85,7 +84,6 @@ const classifySkinConditionFlow = ai.defineFlow(
       prompt: classifySkinConditionPrompt(input),
       config: {
         responseMimeType: 'application/json',
-        // It's important to provide safety settings to block potentially harmful content, if any were to be included in an image.
         safetySettings: [
           {category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH'},
           {category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH'},

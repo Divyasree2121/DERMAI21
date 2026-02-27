@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "predeploy": "npm run build && touch out/.nojekyll",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {

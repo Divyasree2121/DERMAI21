@@ -1,5 +1,3 @@
-
-'use server';
 /**
  * @fileOverview A Genkit flow for preprocessing and analyzing a dermatoscopic skin image.
  *
