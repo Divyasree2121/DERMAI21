@@ -1,22 +1,21 @@
+
 # Derm-AI 🏥
 
 AI-assisted skin condition classification using dermatoscopic image analysis.
 
-## Deployment Instructions
+## Development
 
-To deploy this project to GitHub Pages:
+To start the development server:
 
-1. Ensure your remote is set correctly:
-   ```bash
-   git remote add origin https://github.com/Divyasree2121/derm-AI.git
-   ```
-2. Build and deploy:
-   ```bash
-   npm run deploy
-   ```
+```bash
+npm run dev
+```
 
-**Note:** GitHub Pages is a static hosting service. The GenAI-powered analysis features (Genkit) require a backend server and will not function on a static GitHub Pages site. For full functionality, consider hosting with **Firebase App Hosting**.
+To run the Genkit UI for testing flows:
+
+```bash
+npm run genkit:dev
+```
 
 ---
 Derm-AI • © 2026
-# derm-AI
