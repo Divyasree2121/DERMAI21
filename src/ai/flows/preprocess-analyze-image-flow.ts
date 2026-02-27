@@ -2,10 +2,6 @@
 'use server';
 /**
  * @fileOverview A dermatoscopic image analysis AI agent.
- *
- * - preprocessAnalyzeImage - A function that handles skin condition analysis.
- * - PreprocessAnalyzeImageInput - The input type for the analysis.
- * - PreprocessAnalyzeImageOutput - The return type for the analysis.
  */
 
 import {ai} from '@/ai/genkit';
@@ -15,7 +11,7 @@ const PreprocessAnalyzeImageInputSchema = z.object({
   imageDataUri: z
     .string()
     .describe(
-      "A dermatoscopic image of a skin lesion, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "A dermatoscopic image of a skin lesion, as a data URI that must include a MIME type and use Base64 encoding."
     ),
 });
 export type PreprocessAnalyzeImageInput = z.infer<typeof PreprocessAnalyzeImageInputSchema>;
