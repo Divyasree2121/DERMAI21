@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -70,7 +69,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <Button variant="ghost" asChild>
-            <a href="/">Exit Project</a>
+            <a href="/">Logout</a>
           </Button>
         </header>
 
