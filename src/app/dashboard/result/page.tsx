@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogTrigger } from "@/components/ui/dialog"
-import { AlertCircle, ChevronLeft, Lightbulb, Microscope, ShieldAlert, TrendingUp, FileDown, Loader2, Save, Lock, Info } from "lucide-react"
+import { AlertCircle, ChevronLeft, Lightbulb, Microscope, ShieldAlert, TrendingUp, FileDown, Loader2, Save, Lock, Info, LogOut } from "lucide-react"
 import type { PreprocessAnalyzeImageOutput } from "@/ai/flows/preprocess-analyze-image-flow"
 import { encryptData } from "@/lib/crypto"
 import { useToast } from "@/hooks/use-toast"
@@ -218,6 +218,11 @@ export default function ResultPage() {
             >
               {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileDown className="h-4 w-4" />}
               Download (PDF)
+            </Button>
+
+            <Button variant="ghost" onClick={() => router.push("/")} className="gap-2 text-muted-foreground hover:text-destructive">
+              <LogOut className="h-4 w-4" />
+              Logout
             </Button>
           </div>
         </header>
