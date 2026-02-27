@@ -42,41 +42,31 @@ export default function ResultPage() {
     setIsDownloading(true)
     
     try {
-      // Dynamic imports to prevent SSR issues and module resolution errors
+      // Dynamic imports for browser-only libraries
       const html2canvas = (await import("html2canvas")).default
       const { jsPDF } = await import("jspdf")
       
-      // Temporarily show the report off-screen for capture
-      // html2canvas cannot capture elements with display: none
-      const originalStyle = reportRef.current.style.cssText;
-      reportRef.current.style.display = 'block';
-      reportRef.current.style.position = 'fixed';
-      reportRef.current.style.top = '0';
-      reportRef.current.style.left = '-9999px';
-      reportRef.current.style.backgroundColor = '#ffffff';
-      
       const canvas = await html2canvas(reportRef.current, {
-        scale: 2,
+        scale: 1.5,
         useCORS: true,
         logging: false,
         backgroundColor: "#ffffff"
       })
       
-      // Restore original style
-      reportRef.current.style.cssText = originalStyle;
+      // Use JPEG for better compatibility and smaller data strings
+      const imgData = canvas.toDataURL("image/jpeg", 0.95)
       
-      const imgData = canvas.toDataURL("image/png")
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "a4"
       })
       
-      // Use canvas dimensions directly to calculate aspect ratio and avoid getImageProperties UNKNOWN error
       const pdfWidth = pdf.internal.pageSize.getWidth()
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width
       
-      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight)
+      // Explicitly using JPEG format to avoid corruption errors
+      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight)
       pdf.save(`Derm-AI-Report-${sessionId}.pdf`)
       
     } catch (error) {
@@ -246,8 +236,8 @@ export default function ResultPage() {
           </div>
         </div>
 
-        {/* Hidden Report Template for PDF Generation */}
-        <div style={{ display: 'none' }}>
+        {/* Hidden Report Template for PDF Generation - Using off-screen fixed instead of display:none */}
+        <div className="fixed -left-[9999px] top-0 overflow-hidden" aria-hidden="true">
           <div ref={reportRef} className="p-12 bg-white text-black w-[210mm]" style={{ minHeight: "297mm", color: 'black' }}>
             <div className="border-b-4 border-primary pb-8 mb-8 flex justify-between items-end">
               <div>
