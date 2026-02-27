@@ -37,7 +37,7 @@ export default function SignupPage() {
 
       <Card className="w-full max-w-md shadow-xl border-t-4 border-t-accent">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create Academic Account</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
           <CardDescription className="text-center">
             Register
           </CardDescription>
