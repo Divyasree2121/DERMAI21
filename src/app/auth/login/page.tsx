@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -61,7 +60,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Button type="submit" className="w-full py-6 text-lg">Login to System</Button>
+            <Button type="submit" className="w-full py-6 text-lg">Login</Button>
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
