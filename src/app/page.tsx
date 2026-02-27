@@ -27,7 +27,7 @@ export default function Home() {
           <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl mb-4 animate-pulse-slow">
             <Activity className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-7xl font-headline font-bold tracking-tight text-primary">Derm-AI 🩺</h1>
+          <h1 className="text-7xl font-headline font-bold tracking-tight text-primary">Derm-AI</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             AI-assisted skin condition classification using dermatoscopic image analysis.
           </p>
@@ -39,7 +39,6 @@ export default function Home() {
               <div className="p-2 bg-accent/10 rounded-lg">
                 <FlaskConical className="h-6 w-6 text-accent" />
               </div>
-              <span className="text-xl">🧪</span>
             </div>
             <div>
               <h3 className="font-bold text-lg">Automated Image Interpretation</h3>
@@ -52,7 +51,6 @@ export default function Home() {
               <div className="p-2 bg-primary/10 rounded-lg">
                 <Microscope className="h-6 w-6 text-primary" />
               </div>
-              <span className="text-xl">🩺</span>
             </div>
             <div>
               <h3 className="font-bold text-lg">Decision-Support Focus</h3>
@@ -65,7 +63,6 @@ export default function Home() {
               <div className="p-2 bg-accent/10 rounded-lg">
                 <Dna className="h-6 w-6 text-accent" />
               </div>
-              <span className="text-xl">🧬</span>
             </div>
             <div>
               <h3 className="font-bold text-lg">Broad Condition Coverage</h3>
