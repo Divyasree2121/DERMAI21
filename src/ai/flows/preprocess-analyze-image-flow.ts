@@ -1,46 +1,69 @@
 
+'use server';
 /**
- * @fileOverview A client-side simulation for image analysis on static hosting.
+ * @fileOverview A dermatoscopic image analysis AI agent.
+ *
+ * - preprocessAnalyzeImage - A function that handles skin condition analysis.
+ * - PreprocessAnalyzeImageInput - The input type for the analysis.
+ * - PreprocessAnalyzeImageOutput - The return type for the analysis.
  */
 
-import { z } from 'zod';
+import {ai} from '@/ai/genkit';
+import {z} from 'genkit';
 
 const PreprocessAnalyzeImageInputSchema = z.object({
-  imageDataUri: z.string(),
+  imageDataUri: z
+    .string()
+    .describe(
+      "A dermatoscopic image of a skin lesion, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+    ),
 });
 export type PreprocessAnalyzeImageInput = z.infer<typeof PreprocessAnalyzeImageInputSchema>;
 
 const SkinConditionPredictionSchema = z.object({
-  condition: z.string(),
-  score: z.number(),
+  condition: z.string().describe('The name of the suspected skin condition.'),
+  score: z.number().describe('The confidence score as a percentage.'),
 });
 
 const PreprocessAnalyzeImageOutputSchema = z.object({
-  predictedCondition: z.string(),
-  confidenceScore: z.number(),
-  explanation: z.string(),
-  allPredictions: z.array(SkinConditionPredictionSchema),
-  disclaimer: z.string(),
+  predictedCondition: z.string().describe('The most likely skin condition identified.'),
+  confidenceScore: z.number().describe('Confidence score for the primary prediction.'),
+  explanation: z.string().describe('Detailed AI reasoning for the diagnosis based on visual features.'),
+  allPredictions: z.array(SkinConditionPredictionSchema).describe('A list of all possible conditions identified with their scores.'),
+  disclaimer: z.string().describe('A mandatory medical disclaimer.'),
 });
 export type PreprocessAnalyzeImageOutput = z.infer<typeof PreprocessAnalyzeImageOutputSchema>;
 
-/**
- * Simulates AI analysis for static environments like GitHub Pages.
- */
 export async function preprocessAnalyzeImage(input: PreprocessAnalyzeImageInput): Promise<PreprocessAnalyzeImageOutput> {
-  // Artificial delay for UI realism
-  await new Promise(r => setTimeout(r, 1500));
-
-  return {
-    predictedCondition: "Benign Melanocytic Lesion",
-    confidenceScore: 94.2,
-    explanation: "The analysis shows a symmetric lesion with uniform pigment distribution. No signs of architectural disorder or atypical network patterns were detected in the dermatoscopic image provided.",
-    allPredictions: [
-      { condition: "Benign Lesion", score: 94.2 },
-      { condition: "Melanocytic Nevus", score: 4.1 },
-      { condition: "Seborrheic Keratosis", score: 1.2 },
-      { condition: "Others", score: 0.5 }
-    ],
-    disclaimer: "MEDICAL DISCLAIMER: This analysis is a research-only simulation provided by Derm-AI 🏥. It does not constitute medical advice or a professional diagnosis. Please consult a board-certified dermatologist for clinical evaluation."
-  };
+  return preprocessAnalyzeImageFlow(input);
 }
+
+const prompt = ai.definePrompt({
+  name: 'preprocessAnalyzeImagePrompt',
+  input: {schema: PreprocessAnalyzeImageInputSchema},
+  output: {schema: PreprocessAnalyzeImageOutputSchema},
+  prompt: `You are an expert clinical dermatologist and computer vision specialist.
+Analyze the following dermatoscopic image for skin condition classification.
+
+Assess visual features such as symmetry, border irregularity, color variation, and diameter. 
+Provide a multi-class classification prediction.
+
+Input Image: {{media url=imageDataUri}}
+
+Return the findings in a structured format. Always include a disclaimer that this is an AI tool and not a substitute for professional medical advice.`,
+});
+
+const preprocessAnalyzeImageFlow = ai.defineFlow(
+  {
+    name: 'preprocessAnalyzeImageFlow',
+    inputSchema: PreprocessAnalyzeImageInputSchema,
+    outputSchema: PreprocessAnalyzeImageOutputSchema,
+  },
+  async input => {
+    const {output} = await prompt(input);
+    if (!output) {
+      throw new Error('AI failed to generate a response');
+    }
+    return output;
+  }
+);

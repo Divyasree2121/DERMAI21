@@ -2,9 +2,6 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  basePath: '/derm-AI',
-  trailingSlash: true,
   images: {
     unoptimized: true,
     remotePatterns: [
