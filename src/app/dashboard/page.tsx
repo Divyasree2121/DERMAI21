@@ -65,7 +65,7 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <Microscope className="h-10 w-10 text-primary" />
             <div>
-              <h1 className="text-3xl font-bold font-headline text-primary">Derm-AI Analysis</h1>
+              <h1 className="text-3xl font-bold font-headline text-primary">Derm-AI 🏥 Analysis</h1>
               <p className="text-sm text-muted-foreground uppercase tracking-widest">Workflow Manager</p>
             </div>
           </div>

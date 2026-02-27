@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -33,7 +32,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 animate-fade-in">
       <Link href="/" className="mb-8 flex items-center gap-2 group">
         <Activity className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
-        <span className="text-2xl font-bold font-headline text-primary">Derm-AI</span>
+        <span className="text-2xl font-bold font-headline text-primary">Derm-AI 🏥</span>
       </Link>
 
       <Card className="w-full max-w-md shadow-xl border-t-4 border-t-accent">
@@ -103,7 +102,7 @@ export default function SignupPage() {
           </div>
           <div className="flex items-start gap-2 p-3 bg-muted rounded-md border text-[11px] text-muted-foreground leading-snug">
             <ShieldAlert className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-            <p>User data is collected strictly for academic verification and system access control purposes within the Derm-AI research project framework.</p>
+            <p>User data is collected strictly for academic verification and system access control purposes within the Derm-AI 🏥 research project framework.</p>
           </div>
         </CardFooter>
       </Card>

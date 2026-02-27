@@ -34,7 +34,7 @@ export function LoadingSplash() {
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background p-6">
       <div className="mb-12 text-center animate-pulse-slow">
-        <h1 className="text-6xl font-headline font-bold tracking-tight text-primary">Derm-AI</h1>
+        <h1 className="text-6xl font-headline font-bold tracking-tight text-primary">Derm-AI 🏥</h1>
         <p className="mt-2 text-sm uppercase tracking-[0.2em] text-muted-foreground">Artificial Intelligence Healthcare</p>
       </div>
       

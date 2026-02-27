@@ -284,7 +284,7 @@ export default function ResultPage() {
                   <CardTitle className="text-xl">Problem Addressed</CardTitle>
                 </div>
                 <CardDescription>
-                  Traditional dermatology faces systemic challenges that Derm-AI aims to solve.
+                  Traditional dermatology faces systemic challenges that Derm-AI 🏥 aims to solve.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -366,7 +366,7 @@ export default function ResultPage() {
           <div ref={reportRef} className="p-12 bg-white text-black w-[210mm]" style={{ minHeight: "297mm", color: 'black' }}>
             <div className="border-b-4 border-primary pb-8 mb-8 flex justify-between items-end">
               <div>
-                <h1 className="text-4xl font-bold text-primary mb-2">Derm-AI Report</h1>
+                <h1 className="text-4xl font-bold text-primary mb-2">Derm-AI 🏥 Report</h1>
                 <p className="text-sm text-gray-500 uppercase tracking-widest font-semibold">AI-Assisted Clinical Decision Support</p>
               </div>
               <div className="text-right">
@@ -416,14 +416,14 @@ export default function ResultPage() {
                 </p>
               </div>
               <p className="text-center text-[9px] text-gray-400 uppercase tracking-widest mt-8 italic">
-                This document is a research-only demonstration for Derm-AI Navigator project.
+                This document is a research-only demonstration for Derm-AI 🏥 Navigator project.
               </p>
             </div>
           </div>
         </div>
 
         <footer className="text-center pt-12 pb-6 border-t">
-          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em]">Academic Project Demonstration • © 2024 Derm-AI Navigator</p>
+          <p className="text-xs text-muted-foreground uppercase tracking-[0.3em]">Academic Project Demonstration • © 2026 Derm-AI 🏥 Navigator</p>
         </footer>
       </div>
     </div>

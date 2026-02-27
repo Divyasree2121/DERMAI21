@@ -27,7 +27,7 @@ export default function Home() {
           <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl mb-4 animate-pulse-slow">
             <Activity className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-7xl font-headline font-bold tracking-tight text-primary">Derm-AI</h1>
+          <h1 className="text-7xl font-headline font-bold tracking-tight text-primary">Derm-AI 🏥</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             AI-assisted skin condition classification using dermatoscopic image analysis.
           </p>
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
 
         <footer className="pt-12 text-muted-foreground text-xs uppercase tracking-widest border-t">
-          Final Year Academic Project • AI in Healthcare • © 2024
+          Final Year Academic Project • AI in Healthcare • © 2026
         </footer>
       </div>
     </div>

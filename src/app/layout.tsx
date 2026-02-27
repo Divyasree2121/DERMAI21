@@ -1,9 +1,8 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Derm-AI Navigator | AI-Assisted Dermatology',
+  title: 'Derm-AI 🏥 | AI-Assisted Dermatology',
   description: 'Academic AI project for dermatoscopic skin condition analysis using EfficientNetB0.',
 };
 

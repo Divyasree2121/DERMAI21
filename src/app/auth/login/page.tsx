@@ -24,7 +24,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 animate-fade-in">
       <Link href="/" className="mb-8 flex items-center gap-2 group">
         <Activity className="h-8 w-8 text-primary group-hover:scale-110 transition-transform" />
-        <span className="text-2xl font-bold font-headline text-primary">Derm-AI</span>
+        <span className="text-2xl font-bold font-headline text-primary">Derm-AI 🏥</span>
       </Link>
 
       <Card className="w-full max-w-md shadow-xl border-t-4 border-t-primary">
