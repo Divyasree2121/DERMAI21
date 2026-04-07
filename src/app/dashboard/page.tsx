@@ -6,12 +6,14 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Upload, X, CheckCircle2, Loader2, Microscope, BrainCircuit, Archive } from "lucide-react"
+import { Upload, X, CheckCircle2, Loader2, Microscope, BrainCircuit, Archive, AlertCircle } from "lucide-react"
 import { preprocessAnalyzeImage, type PreprocessAnalyzeImageOutput } from "@/ai/flows/preprocess-analyze-image-flow"
 import Link from "next/link"
+import { useToast } from "@/hooks/use-toast"
 
 export default function DashboardPage() {
   const router = useRouter()
+  const { toast } = useToast()
   const [image, setImage] = React.useState<string | null>(null)
   const [isAnalyzing, setIsAnalyzing] = React.useState(false)
   const [analysisStep, setAnalysisStep] = React.useState<1 | 2 | 3 | 4>(1)
@@ -34,19 +36,30 @@ export default function DashboardPage() {
     setAnalysisStep(2)
     
     // Simulate steps for UI feel
-    await new Promise(r => setTimeout(r, 2000))
+    await new Promise(r => setTimeout(r, 1500))
     setAnalysisStep(3)
     
     try {
       const response = await preprocessAnalyzeImage({ imageDataUri: image })
-      await new Promise(r => setTimeout(r, 2000))
+      await new Promise(r => setTimeout(r, 1000))
       setResult(response)
       setAnalysisStep(4)
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
       setIsAnalyzing(false)
       setAnalysisStep(1)
-      alert("Analysis failed. Please try again.")
+      
+      const isHighDemand = error.message?.includes('503') || error.message?.includes('high demand')
+      
+      toast({
+        variant: "destructive",
+        title: isHighDemand ? "AI Service Busy" : "Analysis Failed",
+        description: isHighDemand 
+          ? "The AI model is currently experiencing high demand. Please wait a moment and try again." 
+          : "An unexpected error occurred during image processing. Please try a different image.",
+      })
+    } finally {
+      setIsAnalyzing(false)
     }
   }
 
@@ -125,6 +138,7 @@ export default function DashboardPage() {
                       size="lg" 
                       className="w-full max-w-xs py-6 text-lg"
                     >
+                      {isAnalyzing ? <Loader2 className="h-5 w-5 animate-spin mr-2" /> : null}
                       Start AI Analysis
                     </Button>
                   </>

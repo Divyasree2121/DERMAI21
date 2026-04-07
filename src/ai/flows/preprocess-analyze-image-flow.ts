@@ -1,7 +1,7 @@
-
 'use server';
 /**
  * @fileOverview A real dermatoscopic image analysis AI agent using Gemini.
+ * Includes retry logic for handling temporary API unavailability.
  */
 
 import {ai} from '@/ai/genkit';
@@ -56,10 +56,32 @@ const preprocessAnalyzeImageFlow = ai.defineFlow(
     outputSchema: PreprocessAnalyzeImageOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    if (!output) {
-      throw new Error('AI failed to generate a response');
+    let retries = 3;
+    let lastError;
+
+    while (retries > 0) {
+      try {
+        const {output} = await prompt(input);
+        if (!output) {
+          throw new Error('AI failed to generate a response');
+        }
+        return output;
+      } catch (error: any) {
+        lastError = error;
+        const errorMessage = error.message?.toLowerCase() || '';
+        
+        // Handle 503 or "high demand" errors with a retry
+        if (errorMessage.includes('503') || errorMessage.includes('high demand') || errorMessage.includes('unavailable')) {
+          retries--;
+          if (retries > 0) {
+            // Exponential backoff or simple delay
+            await new Promise(resolve => setTimeout(resolve, 2000 * (3 - retries)));
+            continue;
+          }
+        }
+        throw error;
+      }
     }
-    return output;
+    throw lastError;
   }
 );
