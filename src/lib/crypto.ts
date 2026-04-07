@@ -34,6 +34,31 @@ async function deriveKey(password: string, salt: Uint8Array) {
   );
 }
 
+/**
+ * Robust conversion from Uint8Array to Base64 string to avoid stack size issues with large data.
+ */
+function uint8ArrayToBase64(uint8: Uint8Array): string {
+  let binary = '';
+  const len = uint8.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(uint8[i]);
+  }
+  return btoa(binary);
+}
+
+/**
+ * Robust conversion from Base64 string to Uint8Array.
+ */
+function base64ToUint8Array(base64: string): Uint8Array {
+  const binaryString = atob(base64);
+  const len = binaryString.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+}
+
 export async function encryptData(data: string, password: string): Promise<string> {
   const encoder = new TextEncoder();
   const encodedData = encoder.encode(data);
@@ -52,15 +77,11 @@ export async function encryptData(data: string, password: string): Promise<strin
   combined.set(iv, salt.length);
   combined.set(new Uint8Array(encryptedBuffer), salt.length + iv.length);
 
-  return btoa(String.fromCharCode(...combined));
+  return uint8ArrayToBase64(combined);
 }
 
 export async function decryptData(encryptedBase64: string, password: string): Promise<string> {
-  const combined = new Uint8Array(
-    atob(encryptedBase64)
-      .split('')
-      .map((c) => c.charCodeAt(0))
-  );
+  const combined = base64ToUint8Array(encryptedBase64);
 
   const salt = combined.slice(0, 16);
   const iv = combined.slice(16, 28);
