@@ -1,7 +1,7 @@
 'use server';
 /**
  * @fileOverview A real dermatoscopic image analysis AI agent using Gemini.
- * Includes retry logic for handling temporary API unavailability.
+ * Includes robust retry logic for handling temporary API unavailability or high demand.
  */
 
 import {ai} from '@/ai/genkit';
@@ -57,7 +57,7 @@ const preprocessAnalyzeImageFlow = ai.defineFlow(
   },
   async input => {
     let retries = 3;
-    let lastError;
+    let lastError: any;
 
     while (retries > 0) {
       try {
@@ -70,15 +70,24 @@ const preprocessAnalyzeImageFlow = ai.defineFlow(
         lastError = error;
         const errorMessage = error.message?.toLowerCase() || '';
         
-        // Handle 503 or "high demand" errors with a retry
-        if (errorMessage.includes('503') || errorMessage.includes('high demand') || errorMessage.includes('unavailable')) {
+        // Handle 503, "high demand", or "unavailable" errors with an exponential backoff retry
+        const isRetryable = errorMessage.includes('503') || 
+                            errorMessage.includes('high demand') || 
+                            errorMessage.includes('unavailable') ||
+                            errorMessage.includes('overloaded');
+
+        if (isRetryable) {
           retries--;
           if (retries > 0) {
-            // Exponential backoff or simple delay
-            await new Promise(resolve => setTimeout(resolve, 2000 * (3 - retries)));
+            // Exponential backoff: 2s, 4s...
+            const delay = (3 - retries) * 2000;
+            await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
         }
+        
+        // If not retryable or retries exhausted, rethrow with context
+        console.error('AI Flow Error:', errorMessage);
         throw error;
       }
     }
