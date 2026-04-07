@@ -1,6 +1,7 @@
 /**
  * @fileOverview Client-side encryption utility using Web Crypto API.
  * Provides AES-GCM encryption and decryption for securing report data in localStorage.
+ * Includes stack-safe Base64 conversion for large dermatoscopic images.
  */
 
 const ENCRYPTION_ALGORITHM = 'AES-GCM';
@@ -36,6 +37,7 @@ async function deriveKey(password: string, salt: Uint8Array) {
 
 /**
  * Robust conversion from Uint8Array to Base64 string to avoid stack size issues with large data.
+ * Replaces the spread operator (...combined) which can cause RangeError.
  */
 function uint8ArrayToBase64(uint8: Uint8Array): string {
   let binary = '';

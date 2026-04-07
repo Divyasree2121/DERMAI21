@@ -49,7 +49,11 @@ export default function DashboardPage() {
       setIsAnalyzing(false)
       setAnalysisStep(1)
       
-      const isHighDemand = error.message?.includes('503') || error.message?.includes('high demand')
+      const errorMessage = error.message?.toLowerCase() || '';
+      const isHighDemand = errorMessage.includes('503') || 
+                          errorMessage.includes('high demand') || 
+                          errorMessage.includes('unavailable') ||
+                          errorMessage.includes('overloaded');
       
       toast({
         variant: "destructive",
@@ -150,12 +154,12 @@ export default function DashboardPage() {
                       <Loader2 className="h-24 w-24 text-primary animate-spin" />
                       <BrainCircuit className="h-10 w-10 text-accent absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
                     </div>
-                    <div className="text-center space-y-3 w-full max-w-sm">
+                    <div className="text-center space-y-3 w-full max-sm:px-4">
                       <h2 className="text-xl font-bold animate-pulse">
-                        {analysisStep === 2 ? "Preprocessing and normalizing image..." : "Analyzing image using EfficientNetB0..."}
+                        {analysisStep === 2 ? "Preprocessing image..." : "Running AI analysis..."}
                       </h2>
-                      <Progress value={analysisStep === 2 ? 45 : 85} className="h-2" />
-                      <p className="text-sm text-muted-foreground">This may take a few moments as the deep learning model processes visual features.</p>
+                      <Progress value={analysisStep === 2 ? 45 : 85} className="h-2 w-full max-w-[200px] mx-auto" />
+                      <p className="text-sm text-muted-foreground">Extracting visual features using EfficientNetB0.</p>
                     </div>
                   </div>
                 )}
@@ -167,7 +171,7 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-center space-y-2">
                       <h2 className="text-2xl font-bold">Analysis Complete</h2>
-                      <p className="text-muted-foreground">Multi-class classification results are ready for clinical review.</p>
+                      <p className="text-muted-foreground">Results are ready for clinical review.</p>
                     </div>
                     <Button onClick={viewResult} size="lg" className="w-full max-w-xs py-6 text-lg">
                       View Result
